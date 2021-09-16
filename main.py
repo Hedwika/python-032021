@@ -1,0 +1,1 @@
+print("Těším se na další Jirkův super kurz! :)")
