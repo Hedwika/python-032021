@@ -34,7 +34,7 @@ df_joined = df_joined.set_index("month")
 # ax = df_joined.plot(color="red", y="sales_plan_cumsum", title="Skutečné vs plánované tržby")
 # df_joined.plot(kind="bar", y="sales_actual_cumsum", ax=ax)
 df_joined.plot(kind="bar", y=["sales_plan_cumsum", "sales_actual_cumsum"])
-# plt.show()
+plt.show()
 
 df_actual_pivot = pandas.pivot_table(df_actual, index="country", columns="sales_manager", values="contract_value", aggfunc=numpy.sum)
 print(df_actual_pivot)
