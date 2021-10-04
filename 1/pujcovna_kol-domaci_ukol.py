@@ -23,7 +23,7 @@ london_bike_rental["year"] = london_bike_rental["date"].dt.year
 # 10 = rain with thunderstorm
 # 26 = snowfall
 # 94 = Freezing Fog
-london_bike_rental_pivot = pd.pivot_table(london_bike_rental, index="weather_code", columns="year", aggfunc=np.sum, margins=True)
+london_bike_rental_pivot = pd.pivot_table(london_bike_rental, values="cnt", index="weather_code", columns="year", aggfunc=np.sum, margins=True)
 print("Četnost půjčení kol byla za sledovaného počasí v jednotlivých letech následující:")
 print(london_bike_rental_pivot)
 
