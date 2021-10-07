@@ -6,8 +6,8 @@ desired_width = 1000
 pd.set_option('display.width', desired_width)
 pd.set_option('display.max_columns',100)
 
-# with requests.get("https://raw.githubusercontent.com/pesikj/progr2-python/master/data/1976-2020-president.csv") as r:
-#   open("1976-2020-president.csv", 'w', encoding="utf-8").write(r.text)
+with requests.get("https://raw.githubusercontent.com/pesikj/progr2-python/master/data/1976-2020-president.csv") as r:
+  open("1976-2020-president.csv", 'w', encoding="utf-8").write(r.text)
 
 swing_states = pd.read_csv("1976-2020-president.csv")
 
@@ -58,15 +58,14 @@ swing_states_sum = swing_states_sum.sort_values(["ranking"])
 # jsme odebrali některé řádky.
 swing_states_margin = pd.read_csv("1976-2020-president.csv")
 swing_states_margin["Rank"] = swing_states_margin.groupby(["year", "state"])["candidatevotes"].rank(method="min", ascending=False)
-!!! swing_states_margin = swing_states_margin[(swing_states_margin["Rank"] == 1.0) or (swing_states_margin["Rank"] == 2.0)]
-print(swing_states_margin.head())
-
-!!! swing_states_margin["1st_runner"] = swing_states_margin["candidatevotes"].shift(periods=-1)
-!!! swing_states_margin = swing_states_margin[swing_states_margin["Rank"] == 1.0]
-!!! swing_states_margin["Difference"] = swing_states_margin["candidatevotes"] - swing_states_margin["Differnce"]
+swing_states_margin = swing_states_margin[(swing_states_margin["Rank"] == 1.0) | (swing_states_margin["Rank"] == 2.0)]
+swing_states_margin = swing_states_margin.sort_values(["state", "year", "candidatevotes"], ascending=False)
+swing_states_margin["1st_runner"] = swing_states_margin["candidatevotes"].shift(periods=-1)
+swing_states_margin = swing_states_margin[swing_states_margin["Rank"] == 1.0]
+swing_states_margin["Difference"] = swing_states_margin["candidatevotes"] - swing_states_margin["1st_runner"]
 
 # 2) Můžeš přidat i sloupec s relativním marginem, tj. rozdílem vyděleným počtem hlasů.
-!!! swing_states_margin["Relative_difference"] = swing_states_margin["Difference"] / swing_states_margin["totalvotes"]
+swing_states_margin["Relative_difference"] = swing_states_margin["Difference"] / swing_states_margin["totalvotes"]
 
 # 3) Seřaď tabulku podle velikosti margin (absolutním i relativním) a zjisti, kde byl výsledek voleb nejtěsnější.
-!!! swing_states_margin = swing_states_margin.sort_values(["Relative_difference", "Difference"], ascending=True)
+swing_states_margin = swing_states_margin.sort_values(["Relative_difference", "Difference"], ascending=True)
