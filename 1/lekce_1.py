@@ -25,7 +25,7 @@ print(df_actual.head())
 df_actual_grouped = df_actual.groupby(["month", "year"]).sum()
 df_actual_grouped["sales_actual_cumsum"] = df_actual_grouped["contract_value"].cumsum()
 df_actual_grouped = df_actual_grouped.reset_index()
-# print(df_actual_grouped.head())
+# print(df_actual_grouped)
 
 df_joined = pandas.merge(df_plan, df_actual_grouped, on=["month", "year"])
 df_joined = df_joined.set_index("month")
