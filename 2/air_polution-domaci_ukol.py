@@ -2,7 +2,6 @@ import requests
 import pandas as pd
 import seaborn as sns
 import matplotlib as plt
-import numpy
 
 desired_width = 1000
 pd.set_option('display.width', desired_width)
