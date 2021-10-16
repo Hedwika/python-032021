@@ -28,7 +28,9 @@ lexikon_zvirat = lexikon_zvirat.set_index('id')
 # Pro každý řádek s neplatným odkazem vypiš název zvířete (title).
 
 def check_url(radek):
-    if not isinstance(radek.image_src, str) or not radek.image_src.startswith("https://zoopraha.cz/images/") or not radek.image_src.lower().endswith('jpg'):
+    if not isinstance(radek.image_src, str)\
+            or not radek.image_src.startswith("https://zoopraha.cz/images/")\
+            or not radek.image_src.lower().endswith('jpg'):
         print(radek.title)
 
 for idx, zvire in lexikon_zvirat.iterrows():
