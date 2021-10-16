@@ -15,10 +15,7 @@ engine = create_engine(f"postgresql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATAB
 pocet_obyvatel = pandas.read_sql("pocet_obyvatel", con=engine)
 pocet_bytu = pandas.read_sql("pocet_bytu", con=engine)
 
-# SQL dotaz:
-# df = pandas.read_sql("SELECT * FROM pocet_obyvatel INNER JOIN pocet_bytu ON pocet_bytu.obec = pocet_obyvatel.obec", con=engine)
-# print(df.head())
-
+# Kterých 5 obcí s počtem obyvatel vyšším, než 1000 mělo nejlepší poměr (nejvíc nových bytů na 100 obyvatel)?
 pocet_obyvatel_a_bytu = pocet_obyvatel.merge(pocet_bytu, how="inner")
 
 def pomer_bytu(radka):
@@ -31,3 +28,7 @@ pocet_obyvatel_a_bytu_nad_1000 = pocet_obyvatel_a_bytu[pocet_obyvatel_a_bytu["po
 pocet_obyvatel_a_bytu_nad_1000 = pocet_obyvatel_a_bytu_nad_1000.sort_values(by="pomer_bytu", ascending=False)
 
 print(pocet_obyvatel_a_bytu_nad_1000.head())
+
+# Dobrovolný doplněk: Zkus zjistit, jestli spojení tabulek můžeme udělat na úrovni SQL dotazu a získat je už spojené,
+# místo toho, abychom obě načetly a pak je spojovali.
+# df = pandas.read_sql("SELECT * FROM pocet_obyvatel INNER JOIN pocet_bytu ON pocet_bytu.obec = pocet_obyvatel.obec", con=engine)
