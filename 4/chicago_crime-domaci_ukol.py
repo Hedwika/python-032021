@@ -24,12 +24,12 @@ motor_vehicle_theft = pd.DataFrame(motor_vehicle_theft)
 
 # 2) Tabulku dále pomocí pandasu vyfiltruj tak, aby obsahovala jen informace o krádeži aut
 # (hodnota "AUTOMOBILE" ve sloupci SECONDARY_DESCRIPTION).
-motor_vehicle_theft = motor_vehicle_theft.loc[motor_vehicle_theft["SECONDARY_DESCRIPTION"] == "AUTOMOBILE"]
+motor_vehicle_theft = motor_vehicle_theft[motor_vehicle_theft["SECONDARY_DESCRIPTION"] == "AUTOMOBILE"]
 
 # 3) Ve kterém měsíci dochází nejčastěji ke krádeži auta?
 motor_vehicle_theft["date"] = pd.to_datetime(motor_vehicle_theft["DATE_OF_OCCURRENCE"])
 motor_vehicle_theft["month"] = motor_vehicle_theft["date"].dt.month
 motor_vehicle_theft_months = pd.DataFrame(motor_vehicle_theft)
-motor_vehicle_theft_months_only = motor_vehicle_theft_months.groupby(["month"])["BLOCK"].count()
+motor_vehicle_theft_months_only = motor_vehicle_theft_months.groupby(["month"]).size()
 motor_vehicle_theft_months_only = motor_vehicle_theft_months_only.sort_values(ascending=False)
 print(motor_vehicle_theft_months_only.head())
