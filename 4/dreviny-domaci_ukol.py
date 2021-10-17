@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import create_engine
 import matplotlib.pyplot as plt
 
 desired_width = 1000
