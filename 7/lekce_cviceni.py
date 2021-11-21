@@ -34,8 +34,17 @@ res = mod.fit()
 print(res.summary())
 
 # Přidej do modelu informace o tom, zda je pojištěnec kuřák. Zhodnoť, nakolik se tím zvýšila kvalita modelu.
-insurance_df["smoker"] = insurance_df["smoker"].replace
-insurance_df["smoker"] = pd.get_dummies(insurance_df.smoker)."True"
+insurance_df["smoker"] = insurance_df["smoker"].astype(int)
 print(insurance_df)
 
+mod = smf.ols(formula="charges ~ age + sex + smoker", data=insurance_df)
+res = mod.fit()
+print(res.summary())
+
 # Nakonec přidej do modelu informaci o regionu. Použij metodu target encoding, kterou jsme si ukazovali během lekce.
+charges_region_mean = insurance_df.groupby('region')['charges'].mean()
+insurance_df['region_mean_charges'] = insurance_df['region'].map(charges_region_mean)
+
+mod = smf.ols(formula="charges ~ age + sex + smoker + region_mean_charges", data=insurance_df)
+res = mod.fit()
+print(res.summary())
