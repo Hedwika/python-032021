@@ -27,7 +27,7 @@ print(mannwhitneyu(x, y))
 
 # Hladina významnosti: 5 %
 # Nulová hypotéza: Hodnota ukazatele pm25 byla v lednu 2019 stejná jako v lednu 2020.
-# Alternativní hypotéza: Hodnota ukazatele pm25 byla v lednu 2019 vyšší než v lednu 2020.
+# Alternativní hypotéza: Hodnota ukazatele pm25 byla v lednu 2019 jiná než v lednu 2020.
 
 # Rozhodni, zda bys na hladině významnosti 5 % zamítla nulovou hypotézu. Své rozhodnutí napiš do programu.
 # Hladina významnosti je vyšší než p-hodnota, proto nulovou hypotézu zamítáme.

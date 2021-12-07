@@ -14,7 +14,7 @@ with requests.get("https://raw.githubusercontent.com/pesikj/progr2-python/master
 
 # Hladina významnosti: 5 %
 # Nulová hypotéza: Délky zrna jsou stejné.
-# Alternativní hypotéza: Průměry délky zrna Rosa jsou větší než u odrůdy Canadian.
+# Alternativní hypotéza: Průměry délky zrna Rosa jiné než u odrůdy Canadian.
 
 # 2) Pomocí modulu scipy urči p-hodnotu testu a porovnej ji s hladinou významnosti 5 %. V komentáři uveď závěr,
 # jestli nulovou hypotézu na základě p-hodnoty zamítáme.
