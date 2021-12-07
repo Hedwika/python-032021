@@ -28,11 +28,11 @@ crypto_prices_corr = crypto_prices_pivot.corr()
 
 # 3) V tabulce vyber dvojici kryptoměn s vysokou hodnotou koeficientu korelace a jinou dvojici s koeficientem korelace
 # blízko 0. Změny cen pro dvojice měn, které jsou hodně a naopak málo korelované, si zobraz jako bodový graf.
-wbtc_eth = crypto_prices_corr[["WBTC", "ETH"]]
+wbtc_eth = crypto_prices_pivot[["WBTC", "ETH"]]
 seaborn.jointplot("WBTC", "ETH", wbtc_eth, kind="scatter")
 plt.show()
 
-uni_doge = crypto_prices_corr[["UNI", "DOGE"]]
+uni_doge = crypto_prices_pivot[["UNI", "DOGE"]]
 seaborn.jointplot("UNI", "DOGE", uni_doge, kind="scatter")
 plt.show()
 
@@ -43,10 +43,7 @@ print(crypto_prices_corr_spearman)
 
 # 2) Vyzkoušej si spočítat korelaci pro nějaké kratší časové období (například 1 měsíc) a pro dvě nejvíce a nejméně
 # korelované hodnoty si zobraz vývoj zavírací ceny v čase (jako liniový graf). Je možné korelaci vyčíst z tohoto grafu?
-crypto_prices_month = crypto_prices.tail(30)
-crypto_prices_corr_month = crypto_prices_month.corr()
-print(crypto_prices_corr_month)
-
+crypto_prices_month = crypto_prices_pivot.tail(30)
 ltc = crypto_prices_month["LTC"]
 eos = crypto_prices_month["EOS"]
 plt.plot(ltc, label="LTC", color="silver")

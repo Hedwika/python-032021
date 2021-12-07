@@ -28,5 +28,6 @@ print(stats.gmean(crypto_prices_aave_list) - 1)
 # která je součástí modulu scipy (ten je instalován automaticky spolu s pandas, takže ho nemusíš instalovat).
 crypto_prices = crypto_prices.dropna()
 crypto_prices["Date"] = pd.to_datetime(crypto_prices["Date"])
-crypto_prices["growth"] = 100*crypto_prices.Change.astype(float)
-growth_all = crypto_prices.groupby("Symbol").growth.apply(stats.gmean)
+crypto_prices["growth"] = crypto_prices.Change.astype(float) + 1
+growth_all = crypto_prices.groupby("Symbol").agg({"growth": [stats.gmean]})
+print(growth_all - 1)
