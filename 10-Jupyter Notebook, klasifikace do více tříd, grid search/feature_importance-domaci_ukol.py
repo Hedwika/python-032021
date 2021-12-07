@@ -39,7 +39,6 @@ y_pred = clf.predict(X_test)
 
 print(f1_score(y_test, y_pred, average="weighted"))
 
-
 # Podívej se na atribut featureimportances (clf.featureimportances), který říká, které vstupní proměnné model použil
 # pro rozhodování. Některé budou mít nulovou hodnotu, to znamená, že vůbec potřeba nejsou. Atribut nám dá jen seznam
 # čísel seřazený podle vstupních proměnných, ale ne jejich jména. Ty získáš například z OneHotEncoder (atribut
@@ -47,11 +46,10 @@ print(f1_score(y_test, y_pred, average="weighted"))
 print(clf.feature_importances_)
 
 features = oh_encoder.get_feature_names()[0]
-print(features)
 
 # Která vstupní proměnná má největší "důležitost"?
-# Největší "důležitost" mi při jednou spuštění vychází u druhé proměnné s názvem "x0_normal"., při dalším u první
-# proměnné s názvem "x0_lt-normal".
+print(features)
+
 # Stačí nám tato proměnná pro úspěšnou klasifikaci? Jaký je rozdíl mezi hodnotou f1_score při použití všech proměnných
 # a jen této jedné "nejdůležitější" proměnné?
 
@@ -61,6 +59,7 @@ clf_2.fit(X_train, y_train)
 y_pred = clf_2.predict(X_test)
 
 print(f1_score(y_test, y_pred, average="weighted"))
+print(clf_2.feature_importances_)
 
 # Dobrovolný doplněk
 # Vykresli graf, ze kterého je vidět rozložení hodnot této jedné nejdůležitější proměnné. Můžeš využít groupby nebo
