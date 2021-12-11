@@ -9,15 +9,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 import requests
+from sklearn.datasets import load_iris
 
 desired_width = 1000
 pd.set_option('display.width', desired_width)
 pd.set_option('display.max_columns',100)
 
-r = requests.get(
-    "https://raw.githubusercontent.com/lutydlitatova/czechitas-datasets/main/datasets/soybean-2-rot.csv"
-)
-open("soybean-2-rot.csv", "wb").write(r.content)
+# r = requests.get(
+#     "https://raw.githubusercontent.com/lutydlitatova/czechitas-datasets/main/datasets/soybean-2-rot.csv"
+# )
+# open("soybean-2-rot.csv", "wb").write(r.content)
 
 data = pd.read_csv("soybean-2-rot.csv")
 print(data.head())
@@ -43,17 +44,28 @@ print(f1_score(y_test, y_pred, average="weighted"))
 # pro rozhodování. Některé budou mít nulovou hodnotu, to znamená, že vůbec potřeba nejsou. Atribut nám dá jen seznam
 # čísel seřazený podle vstupních proměnných, ale ne jejich jména. Ty získáš například z OneHotEncoder (atribut
 # feature_namesin, takže například níže by se jednalo o oh_encoder.feature_namesin)
-print(clf.feature_importances_)
+feature_names = oh_encoder.get_feature_names()
 
-features = oh_encoder.get_feature_names()[0]
+def print_feature_importance(names_array, importances_array):
+    """ Prints out a feature importance array as a dataframe. """
+    importances = pd.DataFrame(data=names_array)
+    importances[1] = importances_array
+    importances = importances.T
+    importances.drop(0, axis=0, inplace=True)
+    importances.columns = feature_names
+
+    print(str(importances.reset_index(drop=True)))
+
+print_feature_importance(feature_names, clf.feature_importances_)
 
 # Která vstupní proměnná má největší "důležitost"?
+features = oh_encoder.get_feature_names()[0]
 print(features)
 
 # Stačí nám tato proměnná pro úspěšnou klasifikaci? Jaký je rozdíl mezi hodnotou f1_score při použití všech proměnných
 # a jen této jedné "nejdůležitější" proměnné?
 
-clf_2 = DecisionTreeClassifier(max_depth=3, min_samples_leaf=1, random_state=0, max_features=1)
+clf_2 = DecisionTreeClassifier(max_depth=3, min_samples_leaf=1, random_state=0)
 clf_2.fit(X_train, y_train)
 
 y_pred = clf_2.predict(X_test)
