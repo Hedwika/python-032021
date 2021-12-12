@@ -65,9 +65,22 @@ print(features)
 # Stačí nám tato proměnná pro úspěšnou klasifikaci? Jaký je rozdíl mezi hodnotou f1_score při použití všech proměnných
 # a jen této jedné "nejdůležitější" proměnné?
 
-print(f1_score(y_test, y_pred, average="weighted") - clf.feature_importances_[0])
+X = data["plant-stand"]
+y = data["class"]
 
-# Tato proměnná nám pro úspěšnou klasifikaci nestačí. Hodnota f1_score je při použití všech proměnných větší cca o 0,48.
+oh_encoder = OneHotEncoder()
+X = oh_encoder.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=0
+)
+
+clf = DecisionTreeClassifier(max_depth=3, min_samples_leaf=1, random_state=0)
+clf.fit(X_train, y_train)
+
+y_pred = clf.predict(X_test)
+
+print(f1_score(y_test, y_pred, average="weighted"))
 
 # Dobrovolný doplněk
 # Vykresli graf, ze kterého je vidět rozložení hodnot této jedné nejdůležitější proměnné. Můžeš využít groupby nebo
