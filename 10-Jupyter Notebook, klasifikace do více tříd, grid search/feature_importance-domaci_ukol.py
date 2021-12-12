@@ -65,13 +65,9 @@ print(features)
 # Stačí nám tato proměnná pro úspěšnou klasifikaci? Jaký je rozdíl mezi hodnotou f1_score při použití všech proměnných
 # a jen této jedné "nejdůležitější" proměnné?
 
-clf_2 = DecisionTreeClassifier(max_depth=3, min_samples_leaf=1, random_state=0)
-clf_2.fit(X_train, y_train)
+print(f1_score(y_test, y_pred, average="weighted") - clf.feature_importances_[0])
 
-y_pred = clf_2.predict(X_test)
-
-print(f1_score(y_test, y_pred, average="weighted"))
-print(clf_2.feature_importances_)
+# Tato proměnná nám pro úspěšnou klasifikaci nestačí. Hodnota f1_score je při použití všech proměnných větší cca o 0,48.
 
 # Dobrovolný doplněk
 # Vykresli graf, ze kterého je vidět rozložení hodnot této jedné nejdůležitější proměnné. Můžeš využít groupby nebo
