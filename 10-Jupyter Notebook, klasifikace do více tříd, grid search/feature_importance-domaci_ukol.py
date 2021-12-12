@@ -8,8 +8,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
-import requests
-from sklearn.datasets import load_iris
+import matplotlib.pyplot as plt
 
 desired_width = 1000
 pd.set_option('display.width', desired_width)
@@ -64,8 +63,7 @@ print(features)
 
 # Stačí nám tato proměnná pro úspěšnou klasifikaci? Jaký je rozdíl mezi hodnotou f1_score při použití všech proměnných
 # a jen této jedné "nejdůležitější" proměnné?
-
-X = data["plant-stand"]
+X = data[["plant-stand"]]
 y = data["class"]
 
 oh_encoder = OneHotEncoder()
@@ -82,6 +80,13 @@ y_pred = clf.predict(X_test)
 
 print(f1_score(y_test, y_pred, average="weighted"))
 
+# Tato proměnná nám pro úspěšnou klasifikaci nestačí. Hodnota f1_score je při použití všech proměnných větší cca o 0,24.
+
 # Dobrovolný doplněk
 # Vykresli graf, ze kterého je vidět rozložení hodnot této jedné nejdůležitější proměnné. Můžeš využít groupby nebo
 # pivot_table v kombinaci s metodou plot, nebo například sns.countplot (kde sns je modul seaborn).
+plant_stand = data[["plant-stand"]]
+plant_stand_groupped = plant_stand.groupby(['plant-stand']).size()
+
+plant_stand_groupped.plot(kind='bar',x='name',y='age')
+plt.show()
